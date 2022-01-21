@@ -1,0 +1,22 @@
+start
+    varibile stringa testo in ingresso
+    input lista parole
+    la macchina accetta tutte le parole in ingresso fino a parola specifica "Fine"
+    la macchina deve contare la lunghezza delle parole e analizzare se tra le parole ci sono parole con più di cinque lettere
+    la macchina stampa in output solo le parole con più di 5 lettere se presenti (vero)
+
+
+
+end
+
+start
+    input 
+    String
+    array
+    While inserisci parole testo fino a parola "Fine"
+    conta lettere parole
+    if parola >= 5
+    Stampa parola
+end
+
+
