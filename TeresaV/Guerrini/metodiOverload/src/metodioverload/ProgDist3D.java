@@ -27,7 +27,20 @@ public class ProgDist3D {
         System.out.println("y: :" + y);
         System.out.println("z: :" + z);
         System.out.println("distanza: " + distanza);
-
+        //chiedo le dimensioni degli array
+        int dim1 = (int) Tool.insNumero("dimmi dim. 1: ");
+        int dim2 = (int) Tool.insNumero("dimmi dim. 2: ");
+        //creo array con cui lavorare
+        int ar1[] = new int[dim1];
+        int ar2[] = new int[dim2];
+        int arUnito[] = new int[dim1 + dim2];
+        
+        ar1=Tool.caricaNumeriInt(ar1, 10);
+        ar2=Tool.caricaNumeriInt(ar2, 5);
+        arUnito= Tool.concatArrays(ar1,ar2);
+        Tool.stampaArrays (arUnito);
+        int trovato = Tool.cercaVirus(ar1, ar2);
+     
         /*  x = Tool.insNumero();
         System.out.println(x);
         y = Tool.insNumero("dimmi y");
@@ -39,5 +52,7 @@ public class ProgDist3D {
 
         System.out.println(Tool.insGiorno(1));*/
     }
+
+   
 
 }

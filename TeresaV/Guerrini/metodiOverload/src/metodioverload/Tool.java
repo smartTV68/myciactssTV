@@ -115,5 +115,87 @@ public class Tool {
         
         return ris;
     }
+    /**
+     * Carica dati random in array
+     * @param ar array da caricare
+     * @return array caricato di numeri random da 1 a 10
+     */
+    static int[] caricaNumeri(int[] ar){
+        for(int i=0; i<ar.length;i++){
+            ar[i]=(int) (Math.random()*10)+1; //aggiungo 1 per aumentare la probabilità che venga fuori il 10. genero numeri casuali da 1 a 10
+        }
+        
+        return ar;
+    }
+     /**
+     * Carica dati random in array
+     * @param ar array da caricare
+     * @param range valore massimo del dato da 1 a range
+     * @return array caricato di numeri random da 1 a 10
+     */
+    static int[] caricaNumeriInt(int[] ar, int range){
+        for(int i=0; i<ar.length;i++){
+            double caso = Math.random();
+            caso = caso*range;
+            int valore = (int) caso;
+            valore= valore +1;
+            ar[i]= valore; 
+           // ar[i]=(int) (Math.random()*range)+1; //aggiungo 1 per aumentare la probabilità che venga fuori il 10. genero numeri casuali da 1 a 10
+        }
+        
+        return ar;
     }
 
+    static int[] concatArrays(int[] ar1, int[] ar2) {
+        int dim1 = ar1.length;
+        int dim2 = ar2.length;
+        int dimok =dim1+dim2;
+        int[] arok = new int[dimok];
+        // 0 con 0, 1 con 1, 2 con 2....
+       for (int i=0; i<dim1; i++){
+        arok[i]= ar1[i];
+    }
+       //inserimento secondo array da ultima posizione precedente
+       //0 in 5, 1 in 6, 2 in 7
+        for (int i=0; i<dim2; i++){
+        arok[i+dim1]= ar2[i];
+    }
+        return arok;
+    }
+
+    static void stampaArrays(int[] arUnito) {
+        int indice =0;
+        while (indice< arUnito.length) {
+            System.out.println(arUnito[indice] + ",");
+            indice = indice +1;
+        }
+    }
+    
+    static int cercaVirus(int[] ar, int[] virus){
+        int pos= -1; //se mi da posizione -1 non ha senso in un array quindi non trovato
+        //controllo virus su prima posizione
+        //eseguo enne controlli quanto è lungo il virus
+        int vlen = virus.length;
+        int numcontrolli= ar.length - vlen;
+        
+        for( int k=0; k<numcontrolli; k++){
+           boolean okFound=true;
+           // ciclo controllo sequenza
+            for(int i=0; i<vlen;i++){
+                if(virus[i]!=ar[i+k]){
+                    okFound = false;
+                    break;
+                } //fine controllo virus in posizione
+                
+                if (okFound){//trovavirus
+                    pos= k;
+                    break;
+                }
+        }
+        }
+           
+        return pos;
+    
+    
+    }
+}
