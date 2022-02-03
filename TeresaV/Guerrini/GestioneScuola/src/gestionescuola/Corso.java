@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package gestionescuola;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,14 +11,13 @@ import java.util.Date;
 public class Corso {
 
     // area attributi o proprietà
-    String nomecorso;
-    String descrizione;
-    int durataore;
-    Date datainizio;
-    String link = "https//www.ciaformazione.it";
+    private String nomecorso;
+    private String descrizione;
+    private int durataore;
+    private LocalDate datainizio;
+    private String link = "https//www.ciaformazione.it";
 //una struttura per caricare i possibili 30 alunni (registro)
-
-    Alunno[] registro = new Alunno[30];
+    private Alunno[] registro = new Alunno[30];
 // elenco alunni vuoto
 
     // costruttori
@@ -28,22 +25,117 @@ public class Corso {
         nomecorso = "NN";
         durataore = 0;
         descrizione = "---";
-        datainizio = new Date();
+        datainizio = LocalDate.now();
     }
 
     public Corso(String nomecorso, int durataore) {
         this.nomecorso = nomecorso;
         this.durataore = durataore;
         this.descrizione = "---";
-        datainizio = new Date();
+        datainizio = LocalDate.now();
     }
 
+     public Corso(String nomecorso, int durataore, int y, int m, int d) {
+        this.nomecorso = nomecorso;
+        this.durataore = durataore;
+        this.descrizione = "---";
+         setDatainizio(y, m, d);
+    }
+    
     public Corso(String nomecorso, int durataore, String descrizione) {
         this.nomecorso = nomecorso;
         this.durataore = durataore;
         this.descrizione = descrizione;
-        datainizio = new Date();
+        datainizio = LocalDate.now();
+    }
 
+    public String getNomecorso() {
+        return nomecorso;
+    }
+
+    public void setNomecorso(String nomecorso) {
+        if (nomecorso.length() > 0 && nomecorso.length() < 120);
+        this.nomecorso = nomecorso;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public int getDurataore() {
+        return durataore;
+    }
+
+    public void setDurataore(int durataore) {
+        if (durataore > 0 && durataore < 6000);
+        this.durataore = durataore;
+    }
+
+    public LocalDate getDatainizio() {
+        return datainizio;
+    }
+
+    public void setDatainizio(LocalDate datainizio) {
+        this.datainizio = datainizio;
+    }
+    /**
+     * devo dirgli come voglio la data in un formato italiano o americano....
+     * imposta la data da data testo
+     *
+     * @param datainizio formato YYYY-MM-DD 2022-02-02 (standard database)
+     */
+    public boolean setDatainizio(String datainizio) {
+        try {
+            int y, m, d;
+            String parts[] = datainizio.split("-");
+            y = Integer.parseInt(parts[0]);
+            y = Integer.parseInt(parts[1]);
+            y = Integer.parseInt(parts[2]);
+            LocalDate data = LocalDate.of(2022, 02, 02);
+            this.datainizio = data;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * imposto la data inizio dai 3 parametri numerici
+     *
+     * @param y int anno
+     * @param m int mese
+     * @param d int giorno
+     * @return
+     */
+    public boolean setDatainizio(int y, int m, int d) {
+        try {
+            LocalDate data = LocalDate.of(y, m, d);
+            this.datainizio = data;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Alunno[] getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(Alunno[] registro) {
+        this.registro = registro;
     }
 
     // metodi o capacità o abilità

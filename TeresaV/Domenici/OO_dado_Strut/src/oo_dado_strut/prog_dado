@@ -1,0 +1,27 @@
+Start
+    puntF= leggiinput
+    dado1 = leggi numero cas
+        Stampa =numero dado1
+    dado2 = leggi numero cas
+     Stampa =numero dado2
+    ris 1= somma lanci dado1
+    ris2 = somma lanci dado2
+        while (dado1<puntF && dado2<puntF) then
+        ris1++;
+        ris2++;
+        if (ris1>ris2) then
+                dado1++;
+                stampa mano vinta da dado1
+        else if       
+                dado2++
+                stampa mano vinta da dado2
+        else
+                stampa mano patta
+        end if
+        end while
+    if(dado1 ==punteggio) then 
+        stampa partita vinte da dado1
+    else
+        stampa partita vinta da dado2
+    end if
+end
