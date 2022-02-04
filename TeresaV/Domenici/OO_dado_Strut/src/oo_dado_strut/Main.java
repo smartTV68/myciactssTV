@@ -15,50 +15,32 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-
-        int puntf = 10;
-        int punt1=0 
-        int dado2 = generaNumeroCasuale(6);
-        int ris1= generaNumeroCasuale(6);
-        int ris2= generaNumeroCasuale(6);
-       
-        while (dado1<puntf && dado2<puntf) {
-            
-        ris1++;
-        ris2++;
-        if (ris1>ris2) then
-                dado1++;
-                stampa mano vinta da dado1
-        else if       
-                dado2++
-                stampa mano vinta da dado2
-        else
-                stampa mano patta
-        end if
-        end while
-    if(dado1 ==punteggio) then 
-        stampa partita vinte da dado1
-    else
-        stampa partita vinta da dado2
-    end if
-end
-
-       
-        (for i=0); i>puntfin;i++){
-        
-      
-        int ris1= dado1.generaNumeroCasuale(6);
-        ris1= ++;
-        
+   public static void main(String[] args) {
+        Giocatore g = new Giocatore(10,15,5);
+        Dado dadoG = new Dado(6);
+        Dado dadoB = new Dado(6);
+        int conta = 1;
+        do {
+            dadoG.lancia();
+            dadoB.lancia();
+            stampaMano(conta,dadoG.getUltimoLancio(),dadoB.getUltimoLancio());
+            if (dadoG.getUltimoLancio() > dadoB.getUltimoLancio()) {
+                g.incrementaSoldi();
+                stampaGiocatore(g.getSoldi());
+            } else {
+                g.decrementaSoldi();
+                stampaGiocatore(g.getSoldi());
+            }
+            conta++;
+        } while (g.isContinua());
     }
-    
-    }
-    public static int generaNumeroCasuale(int x) {
-        
-        Random random = new Random();
-        return random.nextInt(x);
 
+    private static void stampaMano(int conta, int lancioG, int lancioB) {
+        String msg = String.format("mano numero %s banco=%s giocatore=%s",conta,lancioB,lancioG );
+        System.out.println(msg);
+    }
+
+    private static void stampaGiocatore(int soldi) {
+        System.out.println("soldi giocatore: " + soldi);
     }
 }
