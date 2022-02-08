@@ -1,4 +1,3 @@
-
 package gestionescuola;
 
 import java.time.LocalDate;
@@ -35,13 +34,13 @@ public class Corso {
         datainizio = LocalDate.now();
     }
 
-     public Corso(String nomecorso, int durataore, int y, int m, int d) {
+    public Corso(String nomecorso, int durataore, int y, int m, int d) {
         this.nomecorso = nomecorso;
         this.durataore = durataore;
         this.descrizione = "---";
-         setDatainizio(y, m, d);
+        setDatainizio(y, m, d);
     }
-    
+
     public Corso(String nomecorso, int durataore, String descrizione) {
         this.nomecorso = nomecorso;
         this.durataore = durataore;
@@ -82,6 +81,7 @@ public class Corso {
     public void setDatainizio(LocalDate datainizio) {
         this.datainizio = datainizio;
     }
+
     /**
      * devo dirgli come voglio la data in un formato italiano o americano....
      * imposta la data da data testo
@@ -171,16 +171,30 @@ public class Corso {
 
     }
 
-    void stampaInfo() {
+    String getInfo() {
+        String ris = "";
+        ris += "----------Scheda Corso----------";
+        ris += "\n Nome del Corso: " + nomecorso;
+        ris += "\n Durata ore: " + durataore;
+        ris += "\nDescrizione del Corso: " + descrizione;
+        ris += "\nData inizio del Corso: " + datainizio.toString();
+        ris += "\nLink Corso: " + link + "\n";
 
-        System.out.println("\n\n----------Scheda Corso----------");
-        System.out.println("Nome del Corso: " + nomecorso);
-        System.out.println("Durata ore: " + durataore);
-        System.out.println("Descrizione del Corso: " + descrizione);
-        System.out.println("Data inizio del Corso: " + datainizio.toString());
-        System.out.println("Link Corso: " + link);
-        System.out.println("\n\n-------------------------\n\n");
-
+        return ris;
     }
+    /**
+     * ritorna un csv con i corsi
+     * testata nomecorso;durataore;descrizione;
+     * @return 
+     */
+ String getCSV() { 
+        String ris = "";
+        //le intestazioni di colonna che andranno però inserite in metodo salvaCorsi CSV
+        //= "nomecorso;durataore;descrizione;datainizio;link;\n";
+        ris += nomecorso +";" + durataore + ";" + descrizione + ";" +
+                datainizio.toString() + ";" + link + "\n";
+
+        return ris;
+    }    
 
 }

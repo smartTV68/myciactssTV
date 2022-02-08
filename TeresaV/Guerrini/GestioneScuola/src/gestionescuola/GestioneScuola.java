@@ -25,7 +25,7 @@ public class GestioneScuola {
         ok = c1.setDatainizio("2022/02/02");
         //gli do una schifezza ma lui mi dice cosa è successo dandomi un valore false
         ok = c1.setDatainizio("2022-30-02");
-        c1.stampaInfo();
+        //c1.stampaInfo();
         Corso c2 = new Corso("qwe", 12, 2022, 3, 3);
         Alunno a1 = new Alunno("Rossi", "Paolo");
 
