@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Alunno {
 
-    //parametri
+    //attributi
     private String cognome;
     private String nome;
     private String mail;
@@ -21,7 +21,7 @@ public class Alunno {
     private LocalDate datainserimento = LocalDate.now();
     private Esame[] libretto = new Esame[50];
 
-    //costruttori
+    //costruttori (assegnazione di parametri agli attributi)
     public Alunno(String cognome, String nome) {
         this.cognome = cognome;
         this.nome = nome;
