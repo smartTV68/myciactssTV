@@ -137,7 +137,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCreaCorso">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Conferma nuovo corso"/>
+        <Property name="text" type="java.lang.String" value="Modifica corso"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>

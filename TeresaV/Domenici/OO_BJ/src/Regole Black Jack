@@ -1,0 +1,14 @@
+GIOCO DEL BLACK JACK
+
+1 o più giocatori ed il banco
+mazzo 52 carte francese (valore figure = 10, valore asso =[1,11]
+Prima di ogni mano
+Tutti i giocatori ricevono due carte scoperte all'inizio della mano.
+Il banco ne riceve due la prima scoperta e la seconda coperta.
+Ciascun Giocatore può cercare di avvicinarsi al 21 pescando altre carte sempre 
+scoperte.
+Alla fine, quando i giocatori hanno finito il banco scopre la carta e finchè il 
+valoreMano è minore di 17 pesca carta scoperta.
+Se banco esce tutti i giocatori rimasti vincono.
+Se il banco non esce si confrontano il valoreMano, se uguale patta altrimenti 
+vince il più grande

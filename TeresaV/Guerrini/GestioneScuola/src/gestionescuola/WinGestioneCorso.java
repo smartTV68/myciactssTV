@@ -64,7 +64,7 @@ public class WinGestioneCorso extends javax.swing.JFrame {
 
         jLabel5.setText("link corso:");
 
-        btnCreaCorso.setText("Conferma nuovo corso");
+        btnCreaCorso.setText("Modifica corso");
         btnCreaCorso.setEnabled(false);
         btnCreaCorso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
