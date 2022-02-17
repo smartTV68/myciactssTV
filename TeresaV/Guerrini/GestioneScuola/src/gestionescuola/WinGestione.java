@@ -31,9 +31,9 @@ public class WinGestione extends javax.swing.JFrame {
     public WinGestione() {
         initComponents();
         this.setLocationRelativeTo(null);//per piazzare finestra in centro
+        caricaDatiAnagrafica();
         caricaDatiCorsi();
         showCorsi();
-        caricaDatiAnagrafica();
 
     }
 
@@ -53,6 +53,11 @@ public class WinGestione extends javax.swing.JFrame {
         btGestAnagrafica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         lblTitolo.setFont(new java.awt.Font("Cantarell", 3, 22)); // NOI18N
         lblTitolo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -119,6 +124,11 @@ public class WinGestione extends javax.swing.JFrame {
         new WinDialogAnagrafica(this, true).setVisible(true);
 
     }//GEN-LAST:event_btGestAnagraficaActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        showCorsi();
+    }//GEN-LAST:event_formWindowActivated
     /**
      * chiamo questo metodo quando ho
      */
@@ -156,8 +166,24 @@ public class WinGestione extends javax.swing.JFrame {
                     int y = Integer.parseInt(d[0]);
                     int m = Integer.parseInt(d[1]);
                     int g = Integer.parseInt(d[2]);
-                    String link = dati[4];
+                    String link = "";
+                    if (dati.length >= 5) {
+                        link = dati[4];
+                    }
+                    ////
                     Corso c = new Corso(nc, dur, y, m, g);
+                    if (dati.length >= 6) {
+                        String registro = dati[5];
+                        String[] regID = registro.split(","); //[ array "1", "4"...]
+                        for (String sid : regID) {
+                            //indice anagrafica
+                            int id = Integer.parseInt(sid); //id =1 id=4
+                            Anagrafica al = getAlunnoByID(id);
+                            c.insertAlunno(al);
+                        }
+                    }
+
+                    ////
                     c.setDescrizione(des);
                     c.setLink(link);
                     //il corso è pronto
@@ -169,8 +195,8 @@ public class WinGestione extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-        
-    }  
+
+    }
 
     private void caricaDatiAnagrafica() {
         try {
@@ -217,7 +243,19 @@ public class WinGestione extends javax.swing.JFrame {
         return newId;
     }
 
+    public static Anagrafica getAlunnoByID(int id) {
+        
+        for (Anagrafica a : listaAnagrafiche) {
+            
+            if (id == a.getId_anagrafica()) {
+                return a;
+            }
+        }
+        return null;
+
+    }
 // recuperiamo dati da interfaccia
+
     /**
      * @param args the command line arguments
      */
@@ -260,4 +298,5 @@ public class WinGestione extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitolo;
     private javax.swing.JTextPane tpDisplay;
     // End of variables declaration//GEN-END:variables
+
 }

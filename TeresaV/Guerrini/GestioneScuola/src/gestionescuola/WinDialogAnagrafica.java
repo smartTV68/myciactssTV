@@ -255,14 +255,31 @@ public class WinDialogAnagrafica extends javax.swing.JDialog {
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
         // TODO add your handling code here:
         int index = lstAnagrafica.getSelectedIndex();
-        if (index==-1) return;
-        int input = JOptionPane.showConfirmDialog(null,
-                "Confermi l'eliminazione?", "ELIMINA Anagrafica", JOptionPane.OK_CANCEL_OPTION);
-                if (input ==0){
-                    WinGestione.listaAnagrafiche.remove(index);
-                }
+        if (index == -1) {
+            return;
+        }
+        //prendo la persona id che è il signor numero x che devo verificare
+        int id = WinGestione.listaAnagrafiche.get(index).getId_anagrafica();
+        boolean ok = true;
+        for (Corso c : WinGestione.listacorsi) {
+            if (c.isAlunno(id) == true) {
+                ok = false;
+                break;
+            }
+        }
+        if (ok) {
+            int input = JOptionPane.showConfirmDialog(null,
+                    "Confermi l'eliminazione?", "ELIMINA Anagrafica", JOptionPane.OK_CANCEL_OPTION);
+            if (input == 0) {
+                boolean iscritto = isAlunno(id);
+                WinGestione.listaAnagrafiche.remove(index);
                 salvaAnagraficaCSV();
-       
+                refreshLista();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Alunno iscritto ","Impossibile cancellare" HEIGHT);
+        }
+
     }//GEN-LAST:event_btnDelActionPerformed
 
     /**
