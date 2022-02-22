@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -51,6 +53,8 @@ public class WinGestione extends javax.swing.JFrame {
         tpDisplay = new javax.swing.JTextPane();
         btnGestioneCorsi = new javax.swing.JButton();
         btGestAnagrafica = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCorsi = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -79,6 +83,39 @@ public class WinGestione extends javax.swing.JFrame {
             }
         });
 
+        tblCorsi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nome Corso", "Durata Ore", "Data Inizio"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCorsi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCorsiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCorsi);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,12 +123,15 @@ public class WinGestione extends javax.swing.JFrame {
             .addComponent(lblTitolo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGestioneCorsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btGestAnagrafica, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                .addContainerGap(102, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btGestAnagrafica, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGestioneCorsi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,13 +139,15 @@ public class WinGestione extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblTitolo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGestioneCorsi)
-                        .addGap(28, 28, 28)
-                        .addComponent(btGestAnagrafica))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGestioneCorsi)
+                            .addComponent(btGestAnagrafica))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,10 +170,36 @@ public class WinGestione extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         showCorsi();
+        refreshTable();
     }//GEN-LAST:event_formWindowActivated
+
+    private void tblCorsiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCorsiMouseClicked
+        int idx = tblCorsi.getSelectedRow();
+        JOptionPane.showMessageDialog(null, listacorsi.get(idx).getInfo());
+    }//GEN-LAST:event_tblCorsiMouseClicked
     /**
      * chiamo questo metodo quando ho
      */
+    private void refreshTable() {
+        // recuperare la struttura dati della mia tabella come model
+        DefaultTableModel model = (DefaultTableModel) tblCorsi.getModel();
+        //pulire la tabella dfai dati precedenti e aggiungi righe
+        //se no vede sempre le stesse e setto le dimensioni a zero
+        model.setRowCount(0);
+        int ncol = model.getColumnCount();
+        //abbiamo tre colonne faccio un array da 3 oggetti
+        Object[] rowData = new Object[ncol];
+        for (Corso c : listacorsi) {
+            rowData[0] = c.getNomecorso();
+            rowData[1] = c.getDurataore();
+            DateTimeFormatter ddmmaa = DateTimeFormatter.ofPattern("dd/MM/yy");
+            String dataok = c.getDatainizio().format(ddmmaa);
+            rowData[2] = c.getDatainizio().format(ddmmaa);
+            model.addRow(rowData);
+        }
+
+    }
+
     private void showCorsi() {
         //recupero un corso per volta
         //estraggo info tipo string
@@ -244,9 +312,9 @@ public class WinGestione extends javax.swing.JFrame {
     }
 
     public static Anagrafica getAlunnoByID(int id) {
-        
+
         for (Anagrafica a : listaAnagrafiche) {
-            
+
             if (id == a.getId_anagrafica()) {
                 return a;
             }
@@ -294,8 +362,10 @@ public class WinGestione extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGestAnagrafica;
     private javax.swing.JButton btnGestioneCorsi;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitolo;
+    private javax.swing.JTable tblCorsi;
     private javax.swing.JTextPane tpDisplay;
     // End of variables declaration//GEN-END:variables
 

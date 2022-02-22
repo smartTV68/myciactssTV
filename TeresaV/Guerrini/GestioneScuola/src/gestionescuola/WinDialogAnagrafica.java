@@ -271,13 +271,13 @@ public class WinDialogAnagrafica extends javax.swing.JDialog {
             int input = JOptionPane.showConfirmDialog(null,
                     "Confermi l'eliminazione?", "ELIMINA Anagrafica", JOptionPane.OK_CANCEL_OPTION);
             if (input == 0) {
-                boolean iscritto = isAlunno(id);
+
                 WinGestione.listaAnagrafiche.remove(index);
                 salvaAnagraficaCSV();
                 refreshLista();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Alunno iscritto ","Impossibile cancellare" HEIGHT);
+            JOptionPane.showMessageDialog(null, "Alunno iscritto, Impossibile cancellare");
         }
 
     }//GEN-LAST:event_btnDelActionPerformed
