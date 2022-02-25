@@ -4,7 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="37" green="ff" red="6d" type="rgb"/>
+      <Color blue="13" green="bc" red="40" type="rgb"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -43,10 +43,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="btNewSquadra" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="btUpdate" alignment="0" pref="109" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="btNewSquadra" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btUpdate" alignment="0" pref="139" max="32767" attributes="0"/>
                                   <Component id="txNomeSquadra" pref="139" max="32767" attributes="0"/>
                                   <Component id="txSede" alignment="0" max="32767" attributes="0"/>
                               </Group>

@@ -17,12 +17,12 @@ public class Partita {
     private int mete2;
 
     
-    public Partita(int giornata, String squadra1, String squadra2, int gol1, int gol2) {
+    public Partita(int giornata, String squadra1, String squadra2, int metesq1, int metesq2) {
         this.giornata = giornata;
         this.squadra1 = squadra1;
         this.squadra2 = squadra2;
-        this.mete1 = mete1;
-        this.mete2 = mete2;
+        this.mete1 = metesq1;
+        this.mete2 = metesq2;
         
         
         

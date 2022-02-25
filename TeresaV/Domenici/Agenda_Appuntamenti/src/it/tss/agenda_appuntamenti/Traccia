@@ -1,0 +1,11 @@
+Agenda appuntamenti
+
+Un appuntamento è caratterizzato da data ora inizio, ora fine, luogo , persona
+Agenda deve offrire le seguenti fuinzionalità
+- Appuntamento aggiungi (data,oraInizio,oraFine,luogo,persona)
+- cancella(appuntamento)
+- List<Appuntamento> cerca (data, luogo, persona)
+Passi:
+1) creare classi con relative proprietà e metodi necessari vuoti
+2) implementare ciascun metodo con gli opportuni controlli ed eventuali eccezioni
+

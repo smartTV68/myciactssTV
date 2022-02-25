@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
  */
 public class Room {
 
-    private List<Reservation> list = new ArrayList<>();
+    private final List<Reservation> prenotazioni = new ArrayList<>();
 
     public Reservation reserve(String nome, LocalDate inizio, LocalDate fine) {
         Reservation r = new Reservation(nome, inizio, fine);
         if (isOccupata(r)) {
             throw new IllegalArgumentException("periodo già occupato");
         }
-        list.add(r);
+        prenotazioni.add(r);
         return r;
 
     }
@@ -34,25 +34,18 @@ public class Room {
     public List<Reservation> reservations() {
         // for (int i = 0; i < list.size(); i++) {
         Comparator<Reservation> comp = (r1, r2) -> r1.getInizio().compareTo(r2.getInizio());
-        return this.list.stream().sorted(comp).collect(Collectors.toList());
+        return this.prenotazioni.stream().sorted(comp).collect(Collectors.toList());
     }
 
-    private boolean isOccupata(Reservation nuova) {
-        Predicate<Reservation> inizioNonValido = (r) ->
-                !nuova.getInizio().isBefore(r.getInizio()) &&
-                        !nuova.getFine().isAfter(r.getFine() || !nuova.getInizio().isBefore(r.getFine()) && nuova.getFine());
-        
-        
-        
-        for (Reservation r : list) {
-            if (nuova.getInizio().equals(r.getInizio())
-                    || (nuova.getInizio().isAfter(r.getInizio()) && nuova.getInizio().isBefore(r.getFine()))
-                    || nuova.getFine().isAfter(r.getInizio()) && nuova.getFine().isBefore(r.getFine())) {
-                return true;
-
-            }
-        }
-        return false;
+     private boolean isOccupata(Reservation nuova) {
+        Predicate<Reservation> inizioNonValido = (r)
+                -> !nuova.getInizio().isBefore(r.getInizio()) && !nuova.getInizio().isAfter(r.getFine());
+        Predicate<Reservation> fineNonValida = (r)
+                -> !nuova.getFine().isBefore(r.getInizio()) && !nuova.getFine().isAfter(r.getFine());
+        Predicate<Reservation> tuttoNonValido = (r)
+                -> nuova.getInizio().isBefore(r.getInizio()) && nuova.getFine().isAfter(r.getFine());
+        return prenotazioni.stream().anyMatch(inizioNonValido.or(fineNonValida).or(tuttoNonValido));
     }
 
+    
 }
