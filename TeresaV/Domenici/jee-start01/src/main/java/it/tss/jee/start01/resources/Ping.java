@@ -10,7 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import javax.enterprise.inject.Default;
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,8 +29,8 @@ import javax.ws.rs.core.Response;
 public class Ping {
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String ping(@QueryParam("language") String ln) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ping(@QueryParam("language") @DefaultValue("it")String ln) {
         if (ln == null){
           throw new BadRequestException(Response
                   .status(Response.Status.BAD_REQUEST)
