@@ -4,11 +4,17 @@
  */
 package it.tss.blogapp.entity;
 
+import it.tss.blogapp.adapter.UserTypeAdapter;
+import it.tss.blogapp.boundary.PostsResource;
+import it.tss.blogapp.boundary.UsersResource;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.json.Json;
+import javax.json.JsonObject;
 import java.util.Set;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +27,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.ws.rs.core.UriBuilder;
 
 /**
  *
@@ -33,6 +40,7 @@ public class Post extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime created = LocalDateTime.now();
 
+    @JsonbTypeAdapter(UserTypeAdapter.class)
     @ManyToOne(optional = false)
     private User author;
 
@@ -48,9 +56,18 @@ public class Post extends BaseEntity {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    @Column(nullable = false)
     private Set<Tag> tags;
 
+    public JsonObject toJsonSlice() {
+        return Json.createObjectBuilder()
+                .add("id", this.id)
+                .add("title", this.title)
+                .build();
+    }
+
+    /*
+    getter setter
+     */
     public LocalDateTime getCreated() {
         return created;
     }
@@ -64,7 +81,6 @@ public class Post extends BaseEntity {
         return author;
     }
 
-    @JsonbTransient
     public void setAuthor(User author) {
         this.author = author;
     }
@@ -91,6 +107,12 @@ public class Post extends BaseEntity {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public String getLink() {
+        return UriBuilder.fromResource(PostsResource.class)
+                .path(PostsResource.class, "find")
+                .build(this.id).toString();
     }
 
     @Override

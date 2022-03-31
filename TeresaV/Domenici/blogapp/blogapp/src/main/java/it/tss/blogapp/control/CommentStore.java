@@ -11,6 +11,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 
 /**
  *
@@ -24,23 +25,30 @@ public class CommentStore {
     @PersistenceContext
     EntityManager em;
     
-    public List<Comment> all(){
-      return  em.createQuery("select e from Comment e order by e.author")
+    public List<Comment> all() {
+    return em.createQuery("select e from Comment e order by e.author").
+            getResultList();
+    }
+    
+    public List<Comment> byPost(Long postId){
+        return em.createQuery("select e from Comment e where e.post.id= :postId", Comment.class)
+                .setParameter("postId", postId)
                 .getResultList();
     }
     
-      public List<Comment> byUser(Long userId) {
-        return em.createQuery("select e from Comment e where e.author.id = :userId order by e.created DESC", Comment.class)
-                .setParameter("userId", userId).getResultList();
+    public Comment save(Comment entity){
+        return em.merge(entity);
     }
-
-    public Optional<Comment> find(Long id) {
+    
+    public Optional<Comment> find(Long id){
         Comment found = em.find(Comment.class, id);
         return found == null ? Optional.empty() : Optional.of(found);
     }
-
-    public Comment save(Comment entity) {
-        return em.merge(entity);
-
+    
+    public void delete(Long id){
+        Comment found = find(id).orElseThrow(() -> new NotFoundException());
+        em.remove(found);
     }
+
+    
 }

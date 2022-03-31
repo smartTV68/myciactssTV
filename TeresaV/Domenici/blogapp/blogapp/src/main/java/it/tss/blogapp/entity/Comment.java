@@ -4,7 +4,9 @@
  */
 package it.tss.blogapp.entity;
 
-
+import it.tss.blogapp.adapter.PostTypeAdapter;
+import it.tss.blogapp.adapter.UserTypeAdapter;
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,17 +17,18 @@ import javax.persistence.Table;
  * @author tss
  */
 @Entity
-@Table(name ="comment")
-public class Comment extends BaseEntity{
-    
-    
+@Table(name = "comment")
+public class Comment extends BaseEntity {
+
+    @JsonbTypeAdapter(UserTypeAdapter.class)
     @ManyToOne(optional = false)
     private User author;
-    
+
     @Column(nullable = false)
     private String msg;
-    
-    @ManyToOne(optional =false)
+
+    @JsonbTypeAdapter(PostTypeAdapter.class)
+    @ManyToOne(optional = false)
     private Post post;
 
     public User getAuthor() {
@@ -56,8 +59,5 @@ public class Comment extends BaseEntity{
     public String toString() {
         return "Comment{" + "id=" + id + ", author=" + author + ", msg=" + msg + ", post=" + post + '}';
     }
-    
-    
-    
-    
+
 }

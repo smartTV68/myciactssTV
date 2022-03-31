@@ -33,7 +33,7 @@ public abstract class BaseEntity implements Serializable{
         return id;
     }
 
-    @JsonbTransient
+    
     public void setId(Long id) {
         this.id = id;
     }

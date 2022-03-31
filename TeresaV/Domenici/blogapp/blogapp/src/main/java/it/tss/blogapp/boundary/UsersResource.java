@@ -18,7 +18,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 /**
  *
@@ -32,14 +36,21 @@ public class UsersResource {
     
     @Inject
     private PostStore postStore;
+    
+    @Context
+    ResourceContext rc;
+
+    @Context
+    UriInfo uriInfo;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> all() {
+        System.out.println("++" + UriBuilder.fromResource(UsersResource.class).build().toString());
+        System.out.println("--" + uriInfo.getBaseUriBuilder().path(UsersResource.class).build().toString());
         return store.all();
-
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(@Valid User entity) {
@@ -50,7 +61,7 @@ public class UsersResource {
     @GET
     @Path("{id}")
     public User find(@PathParam("id") Long id) {
-        return store.find(id).orElseThrow(() -> new NotFoundException("User non trovatp. id= " + id));
+        return store.find(id).orElseThrow(() -> new NotFoundException("User non trovato. id= " + id));
     }
     
     @GET
